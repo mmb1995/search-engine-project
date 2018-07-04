@@ -240,7 +240,7 @@ public class ChainedHashDictionary<K, V> implements IDictionary<K, V> {
 					this.finished = true;
 				}
 				return result;     
-			}
+            }
 		}
 	}
 }
