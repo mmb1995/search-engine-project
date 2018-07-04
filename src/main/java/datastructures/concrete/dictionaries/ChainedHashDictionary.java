@@ -58,24 +58,24 @@ public class ChainedHashDictionary<K, V> implements IDictionary<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        // Resizes the ChainedHashDictionary if it gets too full
-		if (getLoadFactor() >= .75) {
-			resizeArray();
-		}
-        int index = getHashCode(key);
-        if (chains[index] == null) {
-    		IDictionary<K,V> newDictionary = new ArrayDictionary<K,V>();
-    		newDictionary.put(key, value);
-    		chains[index] = newDictionary;
-    		size++;
-        } else { 
-    		int arraySize = chains[index].size();
-    		chains[index].put(key, value);
-    		if (arraySize < chains[index].size()) {
-    		    size++;
-    		}      		
-        }
-    }
+	// Resizes the ChainedHashDictionary if it gets too full
+	if (getLoadFactor() >= .75) {
+		resizeArray();
+	}
+	int index = getHashCode(key);
+	if (chains[index] == null) {
+		IDictionary<K,V> newDictionary = new ArrayDictionary<K,V>();
+		newDictionary.put(key, value);
+		chains[index] = newDictionary;
+		size++;
+	} else { 
+		int arraySize = chains[index].size();
+		chains[index].put(key, value);
+		if (arraySize < chains[index].size()) {
+			size++;
+		}      		
+	}
+}
     
     /**
      * Resizes the array when it becomes too full
