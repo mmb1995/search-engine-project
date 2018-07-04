@@ -31,12 +31,6 @@ public class PageRankAnalyzer {
      *                  page rank never converges.
      */
     public PageRankAnalyzer(ISet<Webpage> webpages, double decay, double epsilon, int limit) {
-        // Implementation note: We have commented these method calls out so your
-        // search engine doesn't immediately crash when you try running it for the
-        // first time.
-        //
-        // You should uncomment these lines when you're ready to begin working
-        // on this class.
 		if (webpages == null) {
 			throw new NullPointerException();
 		} else if (decay < 0.0 || decay > 1.0 || limit < 0) {
