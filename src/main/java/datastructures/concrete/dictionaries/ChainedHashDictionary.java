@@ -47,7 +47,7 @@ public class ChainedHashDictionary<K, V> implements IDictionary<K, V> {
     public V get(K key) {
         int index = getHashCode(key);
         if (chains[index] == null) {
-    		throw new NoSuchKeyException();
+    	        throw new NoSuchKeyException();
         }
         return chains[index].get(key);
     }
@@ -58,24 +58,24 @@ public class ChainedHashDictionary<K, V> implements IDictionary<K, V> {
      */
     @Override
     public void put(K key, V value) {
-		// Resizes the ChainedHashDictionary if it gets too full
-		if (getLoadFactor() >= .75) {
-			resizeArray();
-		}
-		int index = getHashCode(key);
-		if (chains[index] == null) {
-			IDictionary<K,V> newDictionary = new ArrayDictionary<K,V>();
-			newDictionary.put(key, value);
-			chains[index] = newDictionary;
-			size++;
-		} else { 
-			int arraySize = chains[index].size();
-			chains[index].put(key, value);
-			if (arraySize < chains[index].size()) {
-				size++;
-			}      		
-		}
+	// Resizes the ChainedHashDictionary if it gets too full
+	if (getLoadFactor() >= .75) {
+		resizeArray();
 	}
+	int index = getHashCode(key);
+	if (chains[index] == null) {
+		IDictionary<K,V> newDictionary = new ArrayDictionary<K,V>();
+		newDictionary.put(key, value);
+		chains[index] = newDictionary;
+		size++;
+	} else { 
+		int arraySize = chains[index].size();
+		chains[index].put(key, value);
+		if (arraySize < chains[index].size()) {
+			size++;
+		}      		
+	}
+    }
     
     /**
      * Resizes the array when it becomes too full
@@ -180,24 +180,24 @@ public class ChainedHashDictionary<K, V> implements IDictionary<K, V> {
         private boolean finished;
 
         public ChainedIterator(IDictionary<K, V>[] chains) {
-            this.chains = chains;
-            this.size = 0;
-            this.finished = false;
-            for (int i = 0; i < chains.length; i++) {
-				if (chains[i] != null) {
-					size++;
-				}
+		this.chains = chains;
+		this.size = 0;
+		this.finished = false;
+		for (int i = 0; i < chains.length; i++) {
+			if (chains[i] != null) {
+				size++;
 			}
-			if (size == 0) {
-				this.finished = true;
-			} else {
-				// gets reference to first value in the dictionary
-				while (chains[index] == null) {
-					index++;
-				}
-				current = chains[index].iterator();
-				size--;
+		}
+		if (size == 0) {
+			this.finished = true;
+		} else {
+			// gets reference to first value in the dictionary
+			while (chains[index] == null) {
+				index++;
 			}
+			current = chains[index].iterator();
+			size--;
+		}
         }
         
         /**
@@ -205,43 +205,43 @@ public class ChainedHashDictionary<K, V> implements IDictionary<K, V> {
          */
         @Override
         public boolean hasNext() {
-			return !this.finished;
-		}
+	    return !this.finished;
+	}
 
         /**
-         * Returns the next KvPair<K,V> in the dictionary
-         * Throws an @NoSuchElementException if there are no
-         * elements left in the dictionary.
-         */
-        @Override
-		public KVPair<K, V> next() { 
-			if (!this.hasNext()) {
-				throw new NoSuchElementException();
-			}
-			if (current.hasNext()) {
-				KVPair<K,V> result = current.next();
-				if (size == 0 && !current.hasNext()) {
-					this.finished = true;
-				}
-				return result;
-			} else {
-				index++;
-
-				// gets reference to next element in the dictionary
-				while (chains[index] == null) {
-					this.index++;
-				}
-
-				// calls the iterator for the element contained at this index
-				this.current = chains[index].iterator();
-				this.size--;
-				KVPair<K,V> result = current.next();
-				if (size == 0 && !this.current.hasNext()) {
-					this.finished = true;
-				}
-				return result;     
-            }
+        * Returns the next KvPair<K,V> in the dictionary
+        * Throws an @NoSuchElementException if there are no
+        * elements left in the dictionary.
+        */
+        @Override 
+        public KVPair<K, V> next() { 
+		if (!this.hasNext()) {
+			throw new NoSuchElementException();
 		}
+		if (current.hasNext()) {
+			KVPair<K,V> result = current.next();
+			if (size == 0 && !current.hasNext()) {
+				this.finished = true;
+			}
+			return result;
+		} else {
+			index++;
+
+			// gets reference to next element in the dictionary
+			while (chains[index] == null) {
+				this.index++;
+			}
+
+			// calls the iterator for the element contained at this index
+			this.current = chains[index].iterator();
+			this.size--;
+			KVPair<K,V> result = current.next();
+			if (size == 0 && !this.current.hasNext()) {
+				this.finished = true;
+			}
+			return result;     
+            	}
+	}
 	}
 }
 
