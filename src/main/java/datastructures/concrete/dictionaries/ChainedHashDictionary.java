@@ -214,34 +214,34 @@ public class ChainedHashDictionary<K, V> implements IDictionary<K, V> {
          * elements left in the dictionary.
          */
         @Override
-        public KVPair<K, V> next() {
-    		if (!this.hasNext()) {
-    			throw new NoSuchElementException();
-    		}
-    		if (current.hasNext()) {
-    			KVPair<K,V> result = current.next();
-    			if (size == 0 && !current.hasNext()) {
-    				this.finished = true;
-    			}
-    			return result;
-    		} else {
-    			index++;
-    			
-    			// gets reference to next element in the dictionary
-    			while (chains[index] == null) {
-    				this.index++;
-    			}
-    			
-    			// calls the iterator for the element contained at this index
-    			this.current = chains[index].iterator();
-    			this.size--;
-    			KVPair<K,V> result = current.next();
-    			if (size == 0 && !this.current.hasNext()) {
-    				this.finished = true;
-    			}
-    			return result;     
-    		}
-        }
-    }
+		public KVPair<K, V> next() { 
+			if (!this.hasNext()) {
+				throw new NoSuchElementException();
+			}
+			if (current.hasNext()) {
+				KVPair<K,V> result = current.next();
+				if (size == 0 && !current.hasNext()) {
+					this.finished = true;
+				}
+				return result;
+			} else {
+				index++;
+
+				// gets reference to next element in the dictionary
+				while (chains[index] == null) {
+					this.index++;
+				}
+
+				// calls the iterator for the element contained at this index
+				this.current = chains[index].iterator();
+				this.size--;
+				KVPair<K,V> result = current.next();
+				if (size == 0 && !this.current.hasNext()) {
+					this.finished = true;
+				}
+				return result;     
+			}
+			}
+		}
 }
 
